@@ -1,24 +1,4 @@
-export interface CalendarEvent {
-  id: string;
-  title: string;
-  description: string;
-  event_date: string;
-  event_type: "celebration" | "commemoration" | "others";
-  gregorian_date: string;
-  hijri_date: string;
-  created_at: string;
-}
-
-interface CalendarDayProps {
-  day: number | null;
-  hijriDay: number;
-  isCurrentMonth: boolean;
-  isToday: boolean;
-  isSelected: boolean;
-  events: CalendarEvent[];
-  onClick: () => void;
-}
-
+import { CalendarDayProps } from "@/app/utils/types";
 export function CalendarDay({
   day,
   hijriDay,

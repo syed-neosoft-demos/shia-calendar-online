@@ -1,3 +1,5 @@
+import { HijriDate } from "./types";
+
 export const HIJRI_MONTHS = [
   "Muharram",
   "Safar",
@@ -12,13 +14,6 @@ export const HIJRI_MONTHS = [
   "Dhul Qadah",
   "Dhul Hijjah",
 ];
-
-export interface HijriDate {
-  year: number;
-  month: number;
-  day: number;
-  monthName: string;
-}
 
 export function gregorianToHijri(date: Date): HijriDate {
   const gYear = date.getFullYear();

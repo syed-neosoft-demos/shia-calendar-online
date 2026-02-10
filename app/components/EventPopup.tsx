@@ -1,13 +1,5 @@
-
-import { X, Calendar as CalendarIcon, Clock, AlignLeft } from "lucide-react";
-import { type CalendarEvent } from "./Calendar";
-
-interface EventPopupProps {
-  isOpen: boolean;
-  onClose: () => void;
-  events: CalendarEvent[];
-  date: Date | null;
-}
+import { X, Calendar as CalendarIcon } from "lucide-react";
+import { EventPopupProps } from "@/app/utils/types";
 
 export function EventPopup({ isOpen, onClose, events, date }: EventPopupProps) {
   if (!isOpen || !date) return null;
@@ -25,15 +17,15 @@ export function EventPopup({ isOpen, onClose, events, date }: EventPopupProps) {
 
   return (
     <div className="z-50 fixed inset-0 flex justify-center items-center bg-black/60 backdrop-blur-sm p-4">
-      <div 
-        className="bg-gray-900 border border-gray-800 shadow-2xl rounded-2xl w-full max-w-md max-h-[80vh] overflow-hidden flex flex-col animate-in fade-in zoom-in duration-200"
+      <div
+        className="flex flex-col bg-gray-900 shadow-2xl border border-gray-800 rounded-2xl w-full max-w-md max-h-[80vh] overflow-hidden animate-in duration-200 fade-in zoom-in"
         role="dialog"
         aria-modal="true"
       >
         {/* Header */}
-        <div className="flex justify-between items-center p-4 border-b border-gray-800 bg-gray-900/50">
+        <div className="flex justify-between items-center bg-gray-900/50 p-4 border-gray-800 border-b">
           <div>
-            <h2 className="font-bold text-xl text-white">
+            <h2 className="font-bold text-white text-xl">
               {date.toLocaleDateString("en-US", {
                 weekday: "long",
                 month: "long",
@@ -55,28 +47,28 @@ export function EventPopup({ isOpen, onClose, events, date }: EventPopupProps) {
         {/* Content */}
         <div className="flex-1 space-y-4 p-4 overflow-y-auto custom-scrollbar">
           {events.length === 0 ? (
-            <div className="py-8 text-center text-gray-400">
+            <div className="py-8 text-gray-400 text-center">
               No events for this day
             </div>
           ) : (
             events.map((event) => (
               <div
                 key={event.id}
-                className="bg-gray-800/50 p-4 border border-gray-700 hover:border-gray-600 rounded-xl transition-all group"
+                className="group bg-gray-800/50 p-4 border border-gray-700 hover:border-gray-600 rounded-xl transition-all"
               >
                 <div className="flex items-start gap-3">
                   <div
                     className={`w-2 h-2 rounded-full ${getEventColor(
-                      event.event_type
+                      event.event_type,
                     )} mt-2 shrink-0`}
                   />
                   <div className="flex-1 space-y-2">
-                    <h3 className="font-semibold text-lg text-white group-hover:text-blue-400 transition-colors">
+                    <h3 className="font-semibold text-white group-hover:text-blue-400 text-lg transition-colors">
                       {event.title}
                     </h3>
-                    
+
                     <div className="flex items-center gap-2 text-gray-400 text-xs">
-                       <span className="flex items-center gap-1 bg-gray-800 px-2 py-1 rounded-md">
+                      <span className="flex items-center gap-1 bg-gray-800 px-2 py-1 rounded-md">
                         <CalendarIcon size={12} />
                         {event.hijri_date}
                       </span>
@@ -95,10 +87,10 @@ export function EventPopup({ isOpen, onClose, events, date }: EventPopupProps) {
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-gray-800 bg-gray-900/50">
+        <div className="bg-gray-900/50 p-4 border-gray-800 border-t">
           <button
             onClick={onClose}
-            className="w-full bg-gray-800 hover:bg-gray-700 py-2.5 rounded-lg font-medium text-white transition-colors"
+            className="bg-gray-800 hover:bg-gray-700 py-2.5 rounded-lg w-full font-medium text-white transition-colors"
           >
             Close
           </button>

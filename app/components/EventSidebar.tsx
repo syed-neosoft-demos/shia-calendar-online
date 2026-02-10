@@ -1,20 +1,5 @@
 import { ExternalLink } from "lucide-react";
-export interface CalendarEvent {
-  id: string;
-  title: string;
-  description: string;
-  event_date: string;
-  event_type: "celebration" | "commemoration" | "others";
-  gregorian_date: string;
-  hijri_date: string;
-  created_at: string;
-}
-
-interface EventsSidebarProps {
-  events: CalendarEvent[];
-  monthName: string;
-  year: number;
-}
+import { EventsSidebarProps } from "../utils/types";
 
 export function EventsSidebar({ events, monthName, year }: EventsSidebarProps) {
   const sortedEvents = [...events].sort(
