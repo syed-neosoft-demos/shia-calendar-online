@@ -16,7 +16,7 @@ export interface CalendarEvent {
   title: string;
   description: string;
   event_date: string;
-  event_type: "celebration" | "commemoration" | "other";
+  event_type: "celebration" | "commemoration" | "others";
   gregorian_date: string;
   hijri_date: string;
   created_at: string;
@@ -52,7 +52,7 @@ export default function Calendar() {
   useEffect(() => {
     const fetchEvents = async () => {
       setLoading(true);
-      
+
       const data = [
         {
           id: "b0b7b5de-82dd-4f73-b56f-a1fc9d33b7",
