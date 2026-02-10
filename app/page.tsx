@@ -1,65 +1,273 @@
-import Image from "next/image";
+"use client";
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, CalendarIcon } from "lucide-react";
+import { CalendarDay } from "./components/Calendar";
+import { EventsSidebar } from "./components/EventSidebar";
+// import { supabase } from "../data/supabase";
+import {
+  gregorianToHijri,
+  getHijriMonthRange,
+  HIJRI_MONTHS,
+} from "./utils/hijriDates";
 
-export default function Home() {
+export interface CalendarEvent {
+  id: string;
+  title: string;
+  description: string;
+  event_date: string;
+  event_type: "celebration" | "commemoration" | "other";
+  gregorian_date: string;
+  hijri_date: string;
+  created_at: string;
+}
+
+const DAYS_OF_WEEK = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const MONTH_NAMES = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+export default function Calendar() {
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [events, setEvents] = useState<CalendarEvent[]>([]);
+  const [loading, setLoading] = useState(true);
+  console.log("loading :>> ", loading);
+
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      setLoading(true);
+      // const firstDay = new Date(year, month, 1);
+      // const lastDay = new Date(year, month + 1, 0);
+
+      // const { data, error } = await supabase
+      //   .from("events")
+      //   .select("*")
+      //   .gte("event_date", firstDay.toISOString().split("T")[0])
+      //   .lte("event_date", lastDay.toISOString().split("T")[0]);
+
+      // if (!error && data) {
+      //   setEvents(data as CalendarEvent[]);
+      // }
+
+      const data = [
+        {
+          id: "b0b7b5de-82dd-4f73-b56f-a1fc9d33b7",
+          title: "Lailat al-Miraj",
+          description:
+            "The Night Journey and Ascension of the Prophet Muhammad (peace be upon him)",
+          event_date: "2026-02-17",
+          event_type: "celebration",
+          gregorian_date: "February 17, 2026",
+          hijri_date: "27 Rajab 1447",
+          created_at: "2026-02-10T06:25:03.492081+00:00",
+        },
+        {
+          id: "b0b7b5de-8dd-4f73-b56f-a1fc9d33b697",
+          title: "Lailat al-Miraj",
+          description:
+            "The Night Journey and Ascension of the Prophet Muhammad (peace be upon him)",
+          event_date: "2026-02-17",
+          event_type: "commemoration",
+          gregorian_date: "February 17, 2026",
+          hijri_date: "27 Rajab 1447",
+          created_at: "2026-02-10T06:25:03.492081+00:00",
+        },
+        {
+          id: "b0b7b5de-82dd-4f73-b56f-a1d33b697",
+          title: "Lailat al-Miraj",
+          description:
+            "The Night Journey and Ascension of the Prophet Muhammad (peace be upon him)",
+          event_date: "2026-02-17",
+          event_type: "others",
+          gregorian_date: "February 17, 2026",
+          hijri_date: "27 Rajab 1447",
+          created_at: "2026-02-10T06:25:03.492081+00:00",
+        },
+      ];
+      setEvents(data as CalendarEvent[]);
+      setLoading(false);
+    };
+    fetchEvents();
+  }, [year, month]);
+
+  const getDaysInMonth = (year: number, month: number) => {
+    return new Date(year, month + 1, 0).getDate();
+  };
+
+  const getFirstDayOfMonth = (year: number, month: number) => {
+    return new Date(year, month, 1).getDay();
+  };
+
+  const generateCalendarDays = () => {
+    const daysInMonth = getDaysInMonth(year, month);
+    const firstDay = getFirstDayOfMonth(year, month);
+    const days: Array<{
+      gregorian: number | null;
+      hijri: number;
+      date: Date | null;
+    }> = [];
+
+    for (let i = 0; i < firstDay; i++) {
+      days.push({ gregorian: null, hijri: 0, date: null });
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(year, month, day);
+      const hijri = gregorianToHijri(date);
+      days.push({ gregorian: day, hijri: hijri.day, date });
+    }
+
+    return days;
+  };
+
+  const goToPreviousMonth = () => {
+    setCurrentDate(new Date(year, month - 1));
+    setSelectedDate(null);
+  };
+
+  const goToNextMonth = () => {
+    setCurrentDate(new Date(year, month + 1));
+    setSelectedDate(null);
+  };
+
+  const goToToday = () => {
+    setCurrentDate(new Date());
+    setSelectedDate(new Date());
+  };
+
+  const isToday = (date: Date | null) => {
+    if (!date) return false;
+    const today = new Date();
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
+  };
+
+  const isSelected = (date: Date | null) => {
+    if (!date || !selectedDate) return false;
+    return (
+      date.getDate() === selectedDate.getDate() &&
+      date.getMonth() === selectedDate.getMonth() &&
+      date.getFullYear() === selectedDate.getFullYear()
+    );
+  };
+
+  const getEventsForDate = (date: Date | null): CalendarEvent[] => {
+    if (!date) return [];
+    const dateStr = date.toISOString().split("T")[0];
+    return events.filter((event) => event.event_date === dateStr);
+  };
+
+  const hijriRange = getHijriMonthRange(year, month);
+  const hijriDisplay =
+    hijriRange.start.month === hijriRange.end.month
+      ? `${HIJRI_MONTHS[hijriRange.start.month - 1]} ${hijriRange.start.year}`
+      : `${HIJRI_MONTHS[hijriRange.start.month - 1]} - ${HIJRI_MONTHS[hijriRange.end.month - 1]} ${hijriRange.end.year}`;
+
+  const calendarDays = generateCalendarDays();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <div className="bg-gray-950 p-4 md:p-8 min-h-screen text-white">
+      <div className="mx-auto max-w-7xl">
+        <div className="gap-8 grid grid-cols-1 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <div className="bg-gray-900 p-6 border border-gray-800 rounded-lg">
+              <div className="mb-6">
+                <div className="flex justify-between items-center mb-2">
+                  <h1 className="font-bold text-3xl">
+                    {MONTH_NAMES[month]} {year}
+                  </h1>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={goToToday}
+                      className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 px-4 py-2 border border-gray-700 rounded-lg transition-colors"
+                    >
+                      <CalendarIcon size={18} />
+                      <span className="text-sm">Today</span>
+                    </button>
+                    <button
+                      onClick={goToPreviousMonth}
+                      className="bg-gray-800 hover:bg-gray-700 p-2 border border-gray-700 rounded-lg transition-colors"
+                    >
+                      <ChevronLeft size={20} />
+                    </button>
+                    <button
+                      onClick={goToNextMonth}
+                      className="bg-gray-800 hover:bg-gray-700 p-2 border border-gray-700 rounded-lg transition-colors"
+                    >
+                      <ChevronRight size={20} />
+                    </button>
+                  </div>
+                </div>
+                <p className="text-gray-400">{hijriDisplay}</p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-4 mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="bg-green-400 rounded-full w-3 h-3" />
+                  <span className="text-gray-300 text-sm">Celebration</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="bg-red-400 rounded-full w-3 h-3" />
+                  <span className="text-gray-300 text-sm">Commemoration</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="bg-yellow-400 rounded-full w-3 h-3" />
+                  <span className="text-gray-300 text-sm">Other Events</span>
+                </div>
+              </div>
+
+              <div className="gap-2 grid grid-cols-7">
+                {DAYS_OF_WEEK.map((day) => (
+                  <div
+                    key={day}
+                    className="py-2 font-semibold text-gray-400 text-sm text-center"
+                  >
+                    {day}
+                  </div>
+                ))}
+
+                {calendarDays.map((day, index) => (
+                  <CalendarDay
+                    key={index}
+                    day={day.gregorian}
+                    hijriDay={day.hijri}
+                    isCurrentMonth={day.gregorian !== null}
+                    isToday={isToday(day.date)}
+                    isSelected={isSelected(day.date)}
+                    events={getEventsForDate(day.date)}
+                    onClick={() => day.date && setSelectedDate(day.date)}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-1">
+            <EventsSidebar
+              events={events}
+              monthName={MONTH_NAMES[month]}
+              year={year}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }
