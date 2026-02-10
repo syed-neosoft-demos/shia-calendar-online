@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, CalendarIcon } from "lucide-react";
 import { CalendarDay } from "./components/Calendar";
 import { EventsSidebar } from "./components/EventSidebar";
+import { EventPopup } from "./components/EventPopup";
 // import { supabase } from "../data/supabase";
 import {
   gregorianToHijri,
@@ -40,6 +41,7 @@ const MONTH_NAMES = [
 export default function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [loading, setLoading] = useState(true);
   console.log("loading :>> ", loading);
@@ -50,19 +52,7 @@ export default function Calendar() {
   useEffect(() => {
     const fetchEvents = async () => {
       setLoading(true);
-      // const firstDay = new Date(year, month, 1);
-      // const lastDay = new Date(year, month + 1, 0);
-
-      // const { data, error } = await supabase
-      //   .from("events")
-      //   .select("*")
-      //   .gte("event_date", firstDay.toISOString().split("T")[0])
-      //   .lte("event_date", lastDay.toISOString().split("T")[0]);
-
-      // if (!error && data) {
-      //   setEvents(data as CalendarEvent[]);
-      // }
-
+      
       const data = [
         {
           id: "b0b7b5de-82dd-4f73-b56f-a1fc9d33b7",
@@ -174,6 +164,14 @@ export default function Calendar() {
     return events.filter((event) => event.event_date === dateStr);
   };
 
+  const handleDayClick = (date: Date) => {
+    setSelectedDate(date);
+    const dayEvents = getEventsForDate(date);
+    if (dayEvents.length > 0) {
+      setIsPopupOpen(true);
+    }
+  };
+
   const hijriRange = getHijriMonthRange(year, month);
   const hijriDisplay =
     hijriRange.start.month === hijriRange.end.month
@@ -252,7 +250,7 @@ export default function Calendar() {
                     isToday={isToday(day.date)}
                     isSelected={isSelected(day.date)}
                     events={getEventsForDate(day.date)}
-                    onClick={() => day.date && setSelectedDate(day.date)}
+                    onClick={() => day.date && handleDayClick(day.date)}
                   />
                 ))}
               </div>
@@ -268,6 +266,14 @@ export default function Calendar() {
           </div>
         </div>
       </div>
+      {selectedDate && (
+        <EventPopup
+          isOpen={isPopupOpen}
+          onClose={() => setIsPopupOpen(false)}
+          events={getEventsForDate(selectedDate)}
+          date={selectedDate}
+        />
+      )}
     </div>
   );
 }

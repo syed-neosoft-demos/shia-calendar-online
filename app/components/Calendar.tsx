@@ -3,7 +3,7 @@ export interface CalendarEvent {
   title: string;
   description: string;
   event_date: string;
-  event_type: "celebration" | "commemoration" | "other";
+  event_type: "celebration" | "commemoration" | "others";
   gregorian_date: string;
   hijri_date: string;
   created_at: string;
@@ -38,7 +38,7 @@ export function CalendarDay({
   const commemorationEvents = events.filter(
     (e) => e.event_type === "commemoration",
   );
-  const otherEvents = events.filter((e) => e.event_type === "other");
+  const otherEvents = events.filter((e) => e.event_type === "others");
 
   return (
     <button
