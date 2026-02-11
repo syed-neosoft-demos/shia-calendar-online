@@ -4,39 +4,15 @@ import { ChevronLeft, ChevronRight, CalendarIcon } from "lucide-react";
 import { CalendarDay } from "./components/Calendar";
 import { EventsSidebar } from "./components/EventSidebar";
 import { EventPopup } from "./components/EventPopup";
-// import { supabase } from "../data/supabase";
+import { supabase } from "./lib/supabase-client";
 import {
   gregorianToHijri,
   getHijriMonthRange,
   HIJRI_MONTHS,
 } from "./utils/hijriDates";
-
-export interface CalendarEvent {
-  id: string;
-  title: string;
-  description: string;
-  event_date: string;
-  event_type: "celebration" | "commemoration" | "others";
-  gregorian_date: string;
-  hijri_date: string;
-  created_at: string;
-}
-
-const DAYS_OF_WEEK = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const MONTH_NAMES = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+import Header from "./components/Header";
+import { CalendarEvent } from "./utils/types";
+import { DAYS_OF_WEEK, MONTH_NAMES } from "./utils/data";
 
 export default function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -180,8 +156,20 @@ export default function Calendar() {
 
   const calendarDays = generateCalendarDays();
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const { data, error } = await supabase.from("feb-events").select("*");
+
+      console.log("data :>> ", data);
+      console.log("error :>> ", error);
+    };
+
+    fetchUsers();
+  }, []);
+
   return (
     <div className="bg-gray-950 p-4 md:p-8 min-h-screen text-white">
+      <Header />
       <div className="mx-auto max-w-7xl">
         <div className="gap-8 grid grid-cols-1 lg:grid-cols-3">
           <div className="lg:col-span-2">

@@ -42,7 +42,7 @@ export function EventsSidebar({ events, monthName, year }: EventsSidebarProps) {
                     {event.title}
                   </h3>
                   <p className="mb-1 text-gray-400 text-sm">
-                    {event.gregorian_date}
+                    {event.hijri_date}
                   </p>
                   <p className="text-gray-500 text-sm">{event.hijri_date}</p>
                   {event.description && (

@@ -3,7 +3,12 @@ export type CalendarEvent = {
   title: string;
   description: string;
   event_date: string;
-  event_type: "celebration" | "commemoration" | "others";
+  event_type:
+    | "celebration"
+    | "commemoration"
+    | "others"
+    | "historical"
+    | "martyrdom";
   gregorian_date: string;
   hijri_date: string;
   created_at: string;
