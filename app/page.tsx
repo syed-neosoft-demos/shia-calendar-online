@@ -4,53 +4,25 @@ import { ChevronLeft, ChevronRight, CalendarIcon } from "lucide-react";
 import { CalendarDay } from "./components/Calendar";
 import { EventsSidebar } from "./components/EventSidebar";
 import { EventPopup } from "./components/EventPopup";
-import { getHijriMonthRange, HIJRI_MONTHS } from "./utils/hijriDates";
+import { getHijriMonthRange, HIJRI_MONTHS } from "./utils/date";
 import Header from "./components/Header";
-import { CalendarEvent } from "./utils/types";
-import { DAYS_OF_WEEK, MONTH_NAMES } from "./utils/data";
-import { getIslamicDate, formatIslamic } from "./utils/date";
+import { DAYS_OF_WEEK, MONTH_NAMES } from "./utils/date";
 import events from "./lib/events";
+import {
+  generateCalendarDays,
+  getEventsForDate,
+  isSelected,
+  isToday,
+} from "./utils/helper";
 
 export default function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
-
-  const getDaysInMonth = (year: number, month: number) => {
-    return new Date(year, month + 1, 0).getDate();
-  };
-
-  const getFirstDayOfMonth = (year: number, month: number) => {
-    return new Date(year, month, 1).getDay();
-  };
-
-  const generateCalendarDays = () => {
-    const daysInMonth = getDaysInMonth(year, month);
-    const firstDay = getFirstDayOfMonth(year, month);
-    const days: Array<{
-      gregorian: number | null;
-      hijri: number;
-      date: Date | null;
-    }> = [];
-
-    for (let i = 0; i < firstDay; i++) {
-      days.push({ gregorian: null, hijri: 0, date: null });
-    }
-
-    for (let day = 1; day <= daysInMonth; day++) {
-      const date = new Date(year, month, day);
-      // const hijri = gregorianToHijri(date);
-      const hijri = formatIslamic(
-        getIslamicDate(year, month + 1, day as number),
-      );
-      days.push({ gregorian: day, hijri: hijri.day, date });
-    }
-
-    return days;
-  };
 
   const goToPreviousMonth = () => {
     setCurrentDate(new Date(year, month - 1));
@@ -67,33 +39,9 @@ export default function Calendar() {
     setSelectedDate(new Date());
   };
 
-  const isToday = (date: Date | null) => {
-    if (!date) return false;
-    const today = new Date();
-    return (
-      date.getDate() === today.getDate() &&
-      date.getMonth() === today.getMonth() &&
-      date.getFullYear() === today.getFullYear()
-    );
-  };
-
-  const isSelected = (date: Date | null) => {
-    if (!date || !selectedDate) return false;
-    return (
-      date.getDate() === selectedDate.getDate() &&
-      date.getMonth() === selectedDate.getMonth() &&
-      date.getFullYear() === selectedDate.getFullYear()
-    );
-  };
-
-  const getEventsForDate = (date: Date | null): CalendarEvent[] => {
-    if (!date) return [];
-    const dateStr = date.toISOString().split("T")[0];
-    return events.filter((event) => event.event_date === dateStr);
-  };
-
-  const handleDayClick = (date: Date) => {
-    setSelectedDate(date);
+  const handleDayClick = (date: string) => {
+    setSelectedDate(new Date());
+    setSelectedEvent(date);
     const dayEvents = getEventsForDate(date);
     if (dayEvents.length > 0) {
       setIsPopupOpen(true);
@@ -106,22 +54,7 @@ export default function Calendar() {
       ? `${HIJRI_MONTHS[hijriRange.start.month - 1]} ${hijriRange.start.year}`
       : `${HIJRI_MONTHS[hijriRange.start.month - 1]} - ${HIJRI_MONTHS[hijriRange.end.month - 1]} ${hijriRange.end.year}`;
 
-  const calendarDays = generateCalendarDays();
-
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     const { data, error } = await supabase.from("feb-events").select("*");
-  //   };
-
-  //   fetchUsers();
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchEvents = async () => {
-  //     setEvents(events);
-  //   };
-  //   fetchEvents();
-  // }, [year, month]);
+  const calendarDays = generateCalendarDays(year, month);
 
   return (
     <div className="bg-gray-950 p-4 md:p-8 min-h-screen text-white">
@@ -189,15 +122,16 @@ export default function Calendar() {
                   <CalendarDay
                     key={index}
                     day={day.gregorian}
-                    hijriDay={Math.floor(day.hijri)}
                     isCurrentMonth={day.gregorian !== null}
                     isToday={isToday(day.date)}
-                    isSelected={isSelected(day.date)}
-                    events={getEventsForDate(day.date)}
-                    onClick={() => day.date && handleDayClick(day.date)}
-                    hijriDate={formatIslamic(
-                      getIslamicDate(year, month + 1, day.gregorian as number),
-                    )}
+                    isSelected={isSelected(day.date, selectedDate)}
+                    onClick={() =>
+                      day.hijriDate?.day &&
+                      handleDayClick(
+                        `${day.hijriDate.day}-${day.hijriDate.monthName}`,
+                      )
+                    }
+                    hijriDate={day.hijriDate}
                   />
                 ))}
               </div>
@@ -209,6 +143,7 @@ export default function Calendar() {
               events={events}
               monthName={MONTH_NAMES[month]}
               year={year}
+              calendarDays={calendarDays}
             />
           </div>
         </div>
@@ -217,7 +152,7 @@ export default function Calendar() {
         <EventPopup
           isOpen={isPopupOpen}
           onClose={() => setIsPopupOpen(false)}
-          events={getEventsForDate(selectedDate)}
+          events={getEventsForDate(selectedEvent || "")}
           date={selectedDate}
         />
       )}

@@ -4,22 +4,20 @@ export type CalendarEvent = {
   description: string;
   event_date: string;
   event_type:
-  | "celebration"
-  | "martyrdom"
-  | "commemoration"
-  | "historical"
-  | "others";
+    | "celebration"
+    | "martyrdom"
+    | "commemoration"
+    | "historical"
+    | "others";
 };
 
 export type CalendarDayProps = {
   day: number | null;
-  hijriDay: number;
   isCurrentMonth: boolean;
   isToday: boolean;
   isSelected: boolean;
-  events: CalendarEvent[];
   onClick: () => void;
-  hijriDate?: HijriDate;
+  hijriDate?: HijriDate | null;
 };
 
 export type EventPopupProps = {
@@ -33,6 +31,8 @@ export type EventsSidebarProps = {
   events: CalendarEvent[];
   monthName: string;
   year: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  calendarDays: any;
 };
 
 export type HijriDate = {
@@ -40,4 +40,10 @@ export type HijriDate = {
   month: number;
   day: number;
   monthName?: string;
+};
+
+export type IslamicDate = {
+  year: number;
+  month: number; // 1–12
+  day: number; // 1–30
 };

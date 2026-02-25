@@ -1,10 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ExternalLink } from "lucide-react";
 import { EventsSidebarProps } from "../utils/types";
 
-export function EventsSidebar({ events, monthName, year }: EventsSidebarProps) {
-  const sortedEvents = [...events].sort(
-    (a, b) =>
-      new Date(a.event_date).getTime() - new Date(b.event_date).getTime(),
+export function EventsSidebar({
+  events,
+  monthName,
+  year,
+  calendarDays,
+}: EventsSidebarProps) {
+  const matchedEvents = events.filter((event) =>
+    calendarDays.some((day: any) =>
+      event.event_date.includes(
+        day.hijriDate?.day +
+          "-" +
+          day.hijriDate?.monthName?.toLocaleLowerCase(),
+      ),
+    ),
   );
 
   const getEventColor = (type: string) => {
@@ -17,18 +28,18 @@ export function EventsSidebar({ events, monthName, year }: EventsSidebarProps) {
         return "bg-yellow-400";
     }
   };
-  console.log("sortedEvents :>> ", sortedEvents);
+
   return (
     <div className="bg-gray-900 p-6 border border-gray-800 rounded-lg">
       <h2 className="mb-6 font-bold text-white text-2xl">
         Events for {monthName} {year}
       </h2>
 
-      {sortedEvents.length === 0 ? (
+      {matchedEvents.length === 0 ? (
         <p className="text-gray-400">No events scheduled for this month.</p>
       ) : (
         <div className="space-y-4">
-          {sortedEvents.map((event) => (
+          {matchedEvents.map((event) => (
             <div
               key={event.id}
               className="bg-gray-800/50 p-4 border border-gray-700 hover:border-gray-600 rounded-lg transition-colors"
@@ -42,9 +53,9 @@ export function EventsSidebar({ events, monthName, year }: EventsSidebarProps) {
                     {event.title}
                   </h3>
                   <p className="mb-1 text-gray-400 text-sm">
-                    {event.hijri_date}
+                    {event.event_date}
                   </p>
-                  <p className="text-gray-500 text-sm">{event.hijri_date}</p>
+                  {/* <p className="text-gray-500 text-sm">{event.event_date}</p> */}
                   {event.description && (
                     <p className="mt-2 text-gray-300 text-sm">
                       {event.description}

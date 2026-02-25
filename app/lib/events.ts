@@ -46,7 +46,7 @@ const ramadan: CalendarEvent[] = [
     title: "Arba'een",
     description: "Commemoration of the martyrdom of Imam Hussein",
     event_type: "martyrdom",
-    event_date: "20-safar",
+    event_date: "9-ramadan",
   },
 ];
 

@@ -1,26 +1,20 @@
-import { CalendarDayProps } from "@/app/utils/types";
+import { CalendarDayProps, CalendarEvent } from "@/app/utils/types";
+import { getEventsForDate } from "../utils/helper";
 export function CalendarDay({
   day,
-  hijriDay,
   isCurrentMonth,
   isToday,
   isSelected,
-  events,
   onClick,
-  hijriDate
+  hijriDate,
 }: CalendarDayProps) {
   if (!day) {
     return <div className="aspect-square" />;
   }
+  const events: CalendarEvent[] = getEventsForDate(
+    `${hijriDate?.day}-${hijriDate?.monthName}`,
+  );
 
-  const celebrationEvents = events.filter(
-    (e) => e.event_type === "celebration",
-  );
-  const commemorationEvents = events.filter(
-    (e) => e.event_type === "commemoration",
-  );
-  const otherEvents = events.filter((e) => e.event_type === "others");
-  console.log(hijriDate)
   return (
     <button
       onClick={onClick}
@@ -45,14 +39,11 @@ export function CalendarDay({
 
       {events.length > 0 && (
         <div className="flex gap-1 mt-1">
-          {celebrationEvents.length > 0 && (
+          {events.filter((e) => e.event_type === "celebration")?.length > 0 && (
             <div className="bg-green-400 rounded-full w-1.5 h-1.5" />
           )}
-          {commemorationEvents.length > 0 && (
+          {events.filter((e) => e.event_type === "martyrdom")?.length > 0 && (
             <div className="bg-red-400 rounded-full w-1.5 h-1.5" />
-          )}
-          {otherEvents.length > 0 && (
-            <div className="bg-yellow-400 rounded-full w-1.5 h-1.5" />
           )}
         </div>
       )}

@@ -70,7 +70,7 @@ export function EventPopup({ isOpen, onClose, events, date }: EventPopupProps) {
                     <div className="flex items-center gap-2 text-gray-400 text-xs">
                       <span className="flex items-center gap-1 bg-gray-800 px-2 py-1 rounded-md">
                         <CalendarIcon size={12} />
-                        {event.hijri_date}
+                        {event.event_date}
                       </span>
                     </div>
 
