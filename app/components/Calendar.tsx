@@ -19,7 +19,7 @@ export function CalendarDay({
     (e) => e.event_type === "commemoration",
   );
   const otherEvents = events.filter((e) => e.event_type === "others");
-
+  console.log("hijriDay :>> ", hijriDay);
   return (
     <button
       onClick={onClick}

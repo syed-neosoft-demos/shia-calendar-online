@@ -1,18 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, CalendarIcon } from "lucide-react";
-import { CalendarDay } from "./components/Calendar";
-import { EventsSidebar } from "./components/EventSidebar";
-import { EventPopup } from "./components/EventPopup";
-import { supabase } from "./lib/supabase-client";
+import { CalendarDay } from "../components/Calendar";
 import {
   gregorianToHijri,
   getHijriMonthRange,
   HIJRI_MONTHS,
-} from "./utils/hijriDates";
-import Header from "./components/Header";
-import { CalendarEvent } from "./utils/types";
-import { DAYS_OF_WEEK, MONTH_NAMES } from "./utils/data";
+} from "../utils/hijriDates";
+import { CalendarEvent } from "../utils/types";
+import { DAYS_OF_WEEK, MONTH_NAMES } from "../utils/data";
 
 export default function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -78,28 +74,6 @@ export default function Calendar() {
     return new Date(year, month, 1).getDay();
   };
 
-  const generateCalendarDays = () => {
-    const daysInMonth = getDaysInMonth(year, month);
-    const firstDay = getFirstDayOfMonth(year, month);
-    const days: Array<{
-      gregorian: number | null;
-      hijri: number;
-      date: Date | null;
-    }> = [];
-
-    for (let i = 0; i < firstDay; i++) {
-      days.push({ gregorian: null, hijri: 0, date: null });
-    }
-
-    for (let day = 1; day <= daysInMonth; day++) {
-      const date = new Date(year, month, day);
-      const hijri = gregorianToHijri(date);
-      days.push({ gregorian: day, hijri: hijri.day, date });
-    }
-
-    return days;
-  };
-
   const goToPreviousMonth = () => {
     setCurrentDate(new Date(year, month - 1));
     setSelectedDate(null);
@@ -147,25 +121,28 @@ export default function Calendar() {
       setIsPopupOpen(true);
     }
   };
+  const generateCalendarDays = () => {
+    const daysInMonth = getDaysInMonth(year, month);
+    const firstDay = getFirstDayOfMonth(year, month);
+    const days: Array<{
+      gregorian: number | null;
+      hijri: number;
+      date: Date | null;
+    }> = [];
 
-  const hijriRange = getHijriMonthRange(year, month);
-  const hijriDisplay =
-    hijriRange.start.month === hijriRange.end.month
-      ? `${HIJRI_MONTHS[hijriRange.start.month - 1]} ${hijriRange.start.year}`
-      : `${HIJRI_MONTHS[hijriRange.start.month - 1]} - ${HIJRI_MONTHS[hijriRange.end.month - 1]} ${hijriRange.end.year}`;
+    for (let i = 0; i < firstDay; i++) {
+      days.push({ gregorian: null, hijri: 0, date: null });
+    }
 
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(year, month, day);
+      const hijri = gregorianToHijri(date);
+      days.push({ gregorian: day, hijri: hijri.day, date });
+    }
+
+    return days;
+  };
   const calendarDays = generateCalendarDays();
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const { data, error } = await supabase.from("feb-events").select("*");
-
-      console.log("data :>> ", data);
-      console.log("error :>> ", error);
-    };
-
-    fetchUsers();
-  }, []);
 
   return (
     <div className="bg-gray-950 p-4 md:p-8 min-h-screen text-white">
@@ -201,7 +178,7 @@ export default function Calendar() {
                     </button>
                   </div>
                 </div>
-                <p className="text-gray-400">{hijriDisplay}</p>
+                {/* <p className="text-gray-400">{hijriDisplay}</p> */}
               </div>
 
               <div className="flex flex-wrap items-center gap-4 mb-4">
@@ -244,24 +221,8 @@ export default function Calendar() {
               </div>
             </div>
           </div>
-
-          <div className="lg:col-span-1">
-            <EventsSidebar
-              events={events}
-              monthName={MONTH_NAMES[month]}
-              year={year}
-            />
-          </div>
         </div>
       </div>
-      {selectedDate && (
-        <EventPopup
-          isOpen={isPopupOpen}
-          onClose={() => setIsPopupOpen(false)}
-          events={getEventsForDate(selectedDate)}
-          date={selectedDate}
-        />
-      )}
     </div>
   );
 }
