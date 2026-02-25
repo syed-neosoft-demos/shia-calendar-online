@@ -4,14 +4,11 @@ export type CalendarEvent = {
   description: string;
   event_date: string;
   event_type:
-    | "celebration"
-    | "commemoration"
-    | "others"
-    | "historical"
-    | "martyrdom";
-  gregorian_date: string;
-  hijri_date: string;
-  created_at: string;
+  | "celebration"
+  | "martyrdom"
+  | "commemoration"
+  | "historical"
+  | "others";
 };
 
 export type CalendarDayProps = {
@@ -22,6 +19,7 @@ export type CalendarDayProps = {
   isSelected: boolean;
   events: CalendarEvent[];
   onClick: () => void;
+  hijriDate?: HijriDate;
 };
 
 export type EventPopupProps = {
@@ -41,5 +39,5 @@ export type HijriDate = {
   year: number;
   month: number;
   day: number;
-  monthName: string;
+  monthName?: string;
 };

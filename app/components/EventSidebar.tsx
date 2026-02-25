@@ -17,7 +17,7 @@ export function EventsSidebar({ events, monthName, year }: EventsSidebarProps) {
         return "bg-yellow-400";
     }
   };
-
+  console.log("sortedEvents :>> ", sortedEvents);
   return (
     <div className="bg-gray-900 p-6 border border-gray-800 rounded-lg">
       <h2 className="mb-6 font-bold text-white text-2xl">

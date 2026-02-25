@@ -1,74 +1,23 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ChevronLeft, ChevronRight, CalendarIcon } from "lucide-react";
 import { CalendarDay } from "./components/Calendar";
 import { EventsSidebar } from "./components/EventSidebar";
 import { EventPopup } from "./components/EventPopup";
-import { supabase } from "./lib/supabase-client";
-import {
-  gregorianToHijri,
-  getHijriMonthRange,
-  HIJRI_MONTHS,
-} from "./utils/hijriDates";
+import { getHijriMonthRange, HIJRI_MONTHS } from "./utils/hijriDates";
 import Header from "./components/Header";
 import { CalendarEvent } from "./utils/types";
 import { DAYS_OF_WEEK, MONTH_NAMES } from "./utils/data";
+import { getIslamicDate, formatIslamic } from "./utils/date";
+import events from "./lib/events";
 
 export default function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [events, setEvents] = useState<CalendarEvent[]>([]);
-  const [loading, setLoading] = useState(true);
-  console.log("loading :>> ", loading);
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      setLoading(true);
-
-      const data = [
-        {
-          id: "b0b7b5de-82dd-4f73-b56f-a1fc9d33b7",
-          title: "Lailat al-Miraj",
-          description:
-            "The Night Journey and Ascension of the Prophet Muhammad (peace be upon him)",
-          event_date: "2026-02-17",
-          event_type: "celebration",
-          gregorian_date: "February 17, 2026",
-          hijri_date: "27 Rajab 1447",
-          created_at: "2026-02-10T06:25:03.492081+00:00",
-        },
-        {
-          id: "b0b7b5de-8dd-4f73-b56f-a1fc9d33b697",
-          title: "Lailat al-Miraj",
-          description:
-            "The Night Journey and Ascension of the Prophet Muhammad (peace be upon him)",
-          event_date: "2026-02-15",
-          event_type: "commemoration",
-          gregorian_date: "February 17, 2026",
-          hijri_date: "27 Rajab 1447",
-          created_at: "2026-02-10T06:25:03.492081+00:00",
-        },
-        {
-          id: "b0b7b5de-82dd-4f73-b56f-a1d33b697",
-          title: "Lailat al-Miraj",
-          description:
-            "The Night Journey and Ascension of the Prophet Muhammad (peace be upon him)",
-          event_date: "2026-02-12",
-          event_type: "others",
-          gregorian_date: "February 17, 2026",
-          hijri_date: "27 Rajab 1447",
-          created_at: "2026-02-10T06:25:03.492081+00:00",
-        },
-      ];
-      setEvents(data as CalendarEvent[]);
-      setLoading(false);
-    };
-    fetchEvents();
-  }, [year, month]);
 
   const getDaysInMonth = (year: number, month: number) => {
     return new Date(year, month + 1, 0).getDate();
@@ -93,7 +42,10 @@ export default function Calendar() {
 
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(year, month, day);
-      const hijri = gregorianToHijri(date);
+      // const hijri = gregorianToHijri(date);
+      const hijri = formatIslamic(
+        getIslamicDate(year, month + 1, day as number),
+      );
       days.push({ gregorian: day, hijri: hijri.day, date });
     }
 
@@ -156,21 +108,25 @@ export default function Calendar() {
 
   const calendarDays = generateCalendarDays();
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const { data, error } = await supabase.from("feb-events").select("*");
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     const { data, error } = await supabase.from("feb-events").select("*");
+  //   };
 
-      console.log("data :>> ", data);
-      console.log("error :>> ", error);
-    };
+  //   fetchUsers();
+  // }, []);
 
-    fetchUsers();
-  }, []);
+  // useEffect(() => {
+  //   const fetchEvents = async () => {
+  //     setEvents(events);
+  //   };
+  //   fetchEvents();
+  // }, [year, month]);
 
   return (
     <div className="bg-gray-950 p-4 md:p-8 min-h-screen text-white">
-      {/* <Header /> */}
       <div className="mx-auto max-w-7xl">
+        <Header />
         <div className="gap-8 grid grid-cols-1 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <div className="bg-gray-900 p-6 border border-gray-800 rounded-lg">
@@ -239,6 +195,9 @@ export default function Calendar() {
                     isSelected={isSelected(day.date)}
                     events={getEventsForDate(day.date)}
                     onClick={() => day.date && handleDayClick(day.date)}
+                    hijriDate={formatIslamic(
+                      getIslamicDate(year, month + 1, day.gregorian as number),
+                    )}
                   />
                 ))}
               </div>
@@ -262,6 +221,7 @@ export default function Calendar() {
           date={selectedDate}
         />
       )}
+      <Header />
     </div>
   );
 }

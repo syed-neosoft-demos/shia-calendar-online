@@ -7,6 +7,7 @@ export function CalendarDay({
   isSelected,
   events,
   onClick,
+  hijriDate
 }: CalendarDayProps) {
   if (!day) {
     return <div className="aspect-square" />;
@@ -19,7 +20,7 @@ export function CalendarDay({
     (e) => e.event_type === "commemoration",
   );
   const otherEvents = events.filter((e) => e.event_type === "others");
-  console.log("hijriDay :>> ", hijriDay);
+  console.log(hijriDate)
   return (
     <button
       onClick={onClick}
@@ -39,7 +40,7 @@ export function CalendarDay({
         >
           {day}
         </span>
-        <span className="text-gray-400 text-xs">{hijriDay}</span>
+        <span className="text-gray-400 text-xs">{hijriDate?.day}</span>
       </div>
 
       {events.length > 0 && (
