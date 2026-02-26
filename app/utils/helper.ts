@@ -26,7 +26,7 @@ export const generateCalendarDays = (year: number, month: number) => {
 
   for (let day = 1; day <= daysInMonth; day++) {
     const date = new Date(year, month, day);
-
+    console.log("date :>> ", date);
     const hijri = formatIslamic(getIslamicDate(year, month + 1, day as number));
     days.push({ gregorian: day, hijri: hijri.day, hijriDate: hijri, date });
   }

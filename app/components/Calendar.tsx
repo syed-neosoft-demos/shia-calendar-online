@@ -14,7 +14,7 @@ export function CalendarDay({
   const events: CalendarEvent[] = getEventsForDate(
     `${hijriDate?.day}-${hijriDate?.monthName}`,
   );
-
+  console.log("isToday :>> ", isToday);
   return (
     <button
       onClick={onClick}
