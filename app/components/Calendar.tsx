@@ -15,6 +15,7 @@ export function CalendarDay({
     `${hijriDate?.day}-${hijriDate?.monthName}`,
   );
   console.log("isToday :>> ", isToday);
+
   return (
     <button
       onClick={onClick}

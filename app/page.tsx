@@ -7,7 +7,7 @@ import { EventPopup } from "./components/EventPopup";
 import { getHijriMonthRange, HIJRI_MONTHS } from "./utils/date";
 import Header from "./components/Header";
 import { DAYS_OF_WEEK, MONTH_NAMES } from "./utils/date";
-import events from "./lib/events";
+import events from "./utils/events";
 import {
   generateCalendarDays,
   getEventsForDate,
@@ -55,7 +55,8 @@ export default function Calendar() {
       : `${HIJRI_MONTHS[hijriRange.start.month - 1]} - ${HIJRI_MONTHS[hijriRange.end.month - 1]} ${hijriRange.end.year}`;
 
   const calendarDays = generateCalendarDays(year, month);
-
+  const months = new Set(calendarDays.map((el) => el.hijriDate?.monthName));
+  console.log("months :>> ", months);
   return (
     <div className="bg-gray-950 p-4 md:p-8 min-h-screen text-white">
       <div className="mx-auto max-w-7xl">
@@ -90,7 +91,9 @@ export default function Calendar() {
                     </button>
                   </div>
                 </div>
-                <p className="text-gray-400">{hijriDisplay}</p>
+                <p className="text-gray-400">
+                  {[...months].join(", ").replace(",", " - ")}
+                </p>
               </div>
 
               <div className="flex flex-wrap items-center gap-4 mb-4">

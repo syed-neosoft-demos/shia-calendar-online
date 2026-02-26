@@ -1,4 +1,4 @@
-import events from "../lib/events";
+import events from "../utils/events";
 import { formatIslamic, getIslamicDate } from "./date";
 import { CalendarEvent, HijriDate } from "./types";
 
