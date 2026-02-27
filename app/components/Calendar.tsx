@@ -45,6 +45,12 @@ export function CalendarDay({
           {events.filter((e) => e.event_type === "martyrdom")?.length > 0 && (
             <div className="bg-red-400 rounded-full w-1.5 h-1.5" />
           )}
+          {events.filter((e) => e.event_type === "commemoration")?.length > 0 && (
+            <div className="bg-blue-400 rounded-full w-1.5 h-1.5" />
+          )}
+          {events.filter((e) => e.event_type === "historical" || e.event_type === "others")?.length > 0 && (
+            <div className="bg-yellow-400 rounded-full w-1.5 h-1.5" />
+          )}
         </div>
       )}
     </button>

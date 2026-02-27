@@ -140,9 +140,42 @@ export default function Calendar() {
                   />
                 ))}
               </div>
+
+            </div>
+            <div className="bg-gray-900 p-6 border border-gray-800 rounded-lg mt-5">
+              <div className="mb-6">
+                <div className="flex justify-between items-center mb-2">
+                  <h1 className="font-bold text-3xl">
+                    {MONTH_NAMES[month]} {year}
+                  </h1>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={goToToday}
+                      className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 px-4 py-2 border border-gray-700 rounded-lg transition-colors"
+                    >
+                      <CalendarIcon size={18} />
+                      <span className="text-sm">Today</span>
+                    </button>
+                    <button
+                      onClick={goToPreviousMonth}
+                      className="bg-gray-800 hover:bg-gray-700 p-2 border border-gray-700 rounded-lg transition-colors"
+                    >
+                      <ChevronLeft size={20} />
+                    </button>
+                    <button
+                      onClick={goToNextMonth}
+                      className="bg-gray-800 hover:bg-gray-700 p-2 border border-gray-700 rounded-lg transition-colors"
+                    >
+                      <ChevronRight size={20} />
+                    </button>
+                  </div>
+                </div>
+                <p className="text-gray-400">
+                  {[...months].join(", ").replace(",", " - ")}
+                </p>
+              </div>
             </div>
           </div>
-
           <div className="lg:col-span-1">
             <EventsSidebar
               events={events}
@@ -161,7 +194,6 @@ export default function Calendar() {
           date={selectedDate}
         />
       )}
-      <Header />
     </div>
   );
 }
