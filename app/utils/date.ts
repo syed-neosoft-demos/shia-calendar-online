@@ -32,8 +32,6 @@ export const HIJRI_MONTHS = [
   "Dhul Hijjah",
 ];
 
-const overrides: Record<string, 29 | 30> = {};
-
 let globalShift: number = -2;
 
 const ISLAMIC_EPOCH: number = 1948439;
@@ -80,8 +78,7 @@ function defaultMonthLength(year: number, month: number): 29 | 30 {
 }
 
 function getMonthLength(year: number, month: number): 29 | 30 {
-  const key = `${year}-${month}`;
-  return overrides[key] ?? defaultMonthLength(year, month);
+  return defaultMonthLength(year, month);
 }
 
 function jdToIslamic(jd: number): IslamicDate {
@@ -122,27 +119,6 @@ export function getIslamicDate(
   return jdToIslamic(jd);
 }
 
-export function setMonthLength(
-  year: number,
-  month: number,
-  newLength: 29 | 30,
-): void {
-  const key = `${year}-${month}`;
-
-  const oldLength = getMonthLength(year, month);
-
-  overrides[key] = newLength;
-
-  const diff = newLength - oldLength;
-
-  globalShift += diff;
-}
-
-export function resetAdjustments(): void {
-  Object.keys(overrides).forEach((k) => delete overrides[k]);
-  globalShift = 0;
-}
-
 export function formatIslamic(date: IslamicDate): HijriDate {
   const names: string[] = [
     "Muharram",
@@ -169,7 +145,7 @@ export function formatIslamic(date: IslamicDate): HijriDate {
   // return `${date.day} ${names[date.month - 1]} ${date.year} AH`;
 }
 
-export function gregorianToHijri(date: Date): HijriDate {
+function gregorianToHijri(date: Date): HijriDate {
   const gYear = date.getFullYear();
   const gMonth = date.getMonth() + 1;
   const gDay = date.getDate();
@@ -213,10 +189,6 @@ export function gregorianToHijri(date: Date): HijriDate {
     day: hDay,
     monthName: HIJRI_MONTHS[hMonth - 1],
   };
-}
-
-export function formatHijriDate(hijriDate: HijriDate): string {
-  return `${hijriDate.day} ${hijriDate.monthName} ${hijriDate.year}`;
 }
 
 export function getHijriMonthRange(

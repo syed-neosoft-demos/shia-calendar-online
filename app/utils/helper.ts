@@ -2,11 +2,11 @@ import events from "../utils/events";
 import { formatIslamic, getIslamicDate } from "./date";
 import { CalendarEvent, HijriDate } from "./types";
 
-export const getDaysInMonth = (year: number, month: number) => {
+const getDaysInMonth = (year: number, month: number) => {
   return new Date(year, month + 1, 0).getDate();
 };
 
-export const getFirstDayOfMonth = (year: number, month: number) => {
+const getFirstDayOfMonth = (year: number, month: number) => {
   return new Date(year, month, 1).getDay();
 };
 
