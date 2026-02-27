@@ -165,6 +165,24 @@ const rabiAlAwwal: CalendarEvent[] = [
   }
 ]
 
+//month 4
+const rabiAlThani: CalendarEvent[] = [
+  {
+    "id": "044",
+    "title": "Birth of Imam Hasan al-Askari",
+    "description": "Celebration of the birth of the eleventh Imam, Hasan ibn Ali al-Askari.",
+    "event_type": "celebration",
+    "event_date": "8-rabi-al-thani"
+  },
+  {
+    "id": "045",
+    "title": "Demise of Lady Fatima al-Ma'suma",
+    "description": "Commemoration of the passing of Lady Fatima bint Musa al-Kazim, sister of Imam Ali al-Rida, buried in Qom.",
+    "event_type": "martyrdom",
+    "event_date": "10-rabi-al-thani"
+  }
+]
+
 const ramadan: CalendarEvent[] = [
   {
     "id": "037",
@@ -217,6 +235,6 @@ const ramadan: CalendarEvent[] = [
   }
 ]
 
-const events: CalendarEvent[] = [...muharram, ...safar, ...rabiAlAwwal, ...ramadan];
+const events: CalendarEvent[] = [...muharram, ...safar, ...rabiAlAwwal, ...rabiAlThani, ...ramadan];
 
 export default events;
