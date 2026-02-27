@@ -4,7 +4,6 @@ import { ChevronLeft, ChevronRight, CalendarIcon } from "lucide-react";
 import { CalendarDay } from "./components/Calendar";
 import { EventsSidebar } from "./components/EventSidebar";
 import { EventPopup } from "./components/EventPopup";
-import { getHijriMonthRange, HIJRI_MONTHS } from "./utils/date";
 import Header from "./components/Header";
 import { DAYS_OF_WEEK, MONTH_NAMES } from "./utils/date";
 import events from "./utils/events";
@@ -54,15 +53,8 @@ export default function Calendar() {
     }
   };
 
-  const hijriRange = getHijriMonthRange(year, month);
-  const hijriDisplay =
-    hijriRange.start.month === hijriRange.end.month
-      ? `${HIJRI_MONTHS[hijriRange.start.month - 1]} ${hijriRange.start.year}`
-      : `${HIJRI_MONTHS[hijriRange.start.month - 1]} - ${HIJRI_MONTHS[hijriRange.end.month - 1]} ${hijriRange.end.year}`;
-
   const calendarDays = generateCalendarDays(year, month);
   const months = new Set(calendarDays.map((el) => el.hijriDate?.monthName));
-  console.log("months :>> ", months);
   if (!isMounted) {
     return <div className="bg-gray-950 p-4 md:p-8 min-h-screen text-white"></div>;
   }
