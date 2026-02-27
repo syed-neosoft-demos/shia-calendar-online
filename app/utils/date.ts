@@ -17,7 +17,7 @@ export const MONTH_NAMES = [
   "December",
 ];
 
-export const HIJRI_MONTHS = [
+const HIJRI_MONTHS = [
   "Muharram",
   "Safar",
   "Rabi al-Awwal",
@@ -191,15 +191,3 @@ function gregorianToHijri(date: Date): HijriDate {
   };
 }
 
-export function getHijriMonthRange(
-  gregorianYear: number,
-  gregorianMonth: number,
-): { start: HijriDate; end: HijriDate } {
-  const firstDay = new Date(gregorianYear, gregorianMonth, 1);
-  const lastDay = new Date(gregorianYear, gregorianMonth + 1, 0);
-
-  return {
-    start: gregorianToHijri(firstDay),
-    end: gregorianToHijri(lastDay),
-  };
-}
