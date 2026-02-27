@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, CalendarIcon } from "lucide-react";
 import { CalendarDay } from "./components/Calendar";
 import { EventsSidebar } from "./components/EventSidebar";
@@ -16,10 +16,16 @@ import {
 } from "./utils/helper";
 
 export default function Calendar() {
+  const [isMounted, setIsMounted] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
+
+  useEffect(() => {
+    setIsMounted(true);
+    setCurrentDate(new Date());
+  }, []);
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
@@ -57,6 +63,10 @@ export default function Calendar() {
   const calendarDays = generateCalendarDays(year, month);
   const months = new Set(calendarDays.map((el) => el.hijriDate?.monthName));
   console.log("months :>> ", months);
+  if (!isMounted) {
+    return <div className="bg-gray-950 p-4 md:p-8 min-h-screen text-white"></div>;
+  }
+
   return (
     <div className="bg-gray-950 p-4 md:p-8 min-h-screen text-white">
       <div className="mx-auto max-w-7xl">
