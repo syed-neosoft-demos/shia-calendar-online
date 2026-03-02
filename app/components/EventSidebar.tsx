@@ -13,7 +13,7 @@ export function EventsSidebar({
       event.event_date.includes(
         day.hijriDate?.day +
           "-" +
-          day.hijriDate?.monthName?.toLocaleLowerCase(),
+          day.hijriDate?.monthName?.replace?.(" ", "-").toLowerCase(),
       ),
     ),
   );

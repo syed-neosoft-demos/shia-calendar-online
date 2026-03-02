@@ -192,6 +192,190 @@ const rabiAlThani: CalendarEvent[] = [
 ];
 
 //month 5
+const jumadaAlAwwal: CalendarEvent[] = [
+  {
+    id: "051",
+    title: "Battle of Mu'tah",
+    description:
+      "Commemoration of the Battle of Mu'tah in 8 AH, one of the earliest confrontations between Muslims and the Byzantine forces.",
+    event_type: "historical",
+    event_date: "1-jumada-al-awwal",
+  },
+  {
+    id: "00525",
+    title: "Birth of Lady Zaynab bint Ali",
+    description:
+      "Celebration of the birth of Lady Zaynab, daughter of Imam Ali and Lady Fatimah, known for her courage and leadership after Karbala.",
+    event_type: "celebration",
+    event_date: "5-jumada-al-awwal",
+  },
+  {
+    id: "052",
+    title: "First Narration of the Martyrdom of Lady Fatimah",
+    description:
+      "According to one historical narration, this date marks the martyrdom of Lady Fatimah al-Zahra, daughter of the Prophet Muhammad.",
+    event_type: "martyrdom",
+    event_date: "13-jumada-al-awwal",
+  },
+];
+
+//month 6
+const jumadaAlThani: CalendarEvent[] = [
+  {
+    id: "061",
+    title: "Second Narration of the Martyrdom of Lady Fatimah",
+    description:
+      "According to another widely accepted narration, this date marks the martyrdom of Lady Fatimah al-Zahra, daughter of the Prophet Muhammad.",
+    event_type: "martyrdom",
+    event_date: "3-jumada-al-thani",
+  },
+  {
+    id: "062",
+    title: "Birth of Lady Fatimah al-Zahra",
+    description:
+      "Celebration of the birth of Lady Fatimah, daughter of the Prophet Muhammad, revered for her piety, knowledge, and status among the Ahl al-Bayt.",
+    event_type: "celebration",
+    event_date: "20-jumada-al-thani",
+  },
+  {
+    id: "063",
+    title: "Beginning of Ayyam al-Fatimiyyah (Second Period)",
+    description:
+      "Start of the commemorative days observed by many to mourn the martyrdom of Lady Fatimah according to the second narration.",
+    event_type: "commemoration",
+    event_date: "1-jumada-al-thani",
+  },
+];
+
+//month 7
+const rajab: CalendarEvent[] = [
+  {
+    id: "071",
+    title: "Birth of Imam Muhammad al-Baqir",
+    description:
+      "Celebration of the birth of the fifth Imam, Muhammad ibn Ali al-Baqir, known for spreading knowledge and jurisprudence.",
+    event_type: "celebration",
+    event_date: "1-rajab",
+  },
+  {
+    id: "072",
+    title: "Birth of Imam Ali al-Naqi (al-Hadi)",
+    description:
+      "Celebration of the birth of the tenth Imam, Ali ibn Muhammad al-Hadi.",
+    event_type: "celebration",
+    event_date: "2-rajab",
+  },
+  {
+    id: "073",
+    title: "Martyrdom of Imam Ali al-Naqi (al-Hadi)",
+    description:
+      "Commemoration of the martyrdom of the tenth Imam, Ali ibn Muhammad al-Hadi.",
+    event_type: "martyrdom",
+    event_date: "3-rajab",
+  },
+  {
+    id: "074",
+    title: "Martyrdom of Imam Muhammad al-Baqir",
+    description:
+      "Commemoration of the martyrdom of the fifth Imam, Muhammad ibn Ali al-Baqir.",
+    event_type: "martyrdom",
+    event_date: "7-rajab",
+  },
+  {
+    id: "075",
+    title: "Birth of Imam Muhammad al-Jawad (al-Taqi)",
+    description:
+      "Celebration of the birth of the ninth Imam, Muhammad ibn Ali al-Jawad.",
+    event_type: "celebration",
+    event_date: "10-rajab",
+  },
+  {
+    id: "076",
+    title: "Birth of Imam Ali ibn Abi Talib",
+    description:
+      "Celebration of the birth of the first Imam, Ali ibn Abi Talib, born inside the Holy Kaaba in Mecca.",
+    event_type: "celebration",
+    event_date: "13-rajab",
+  },
+  {
+    id: "077",
+    title: "Death of Zaynab bint Ali (Zaynab al-Kubra)",
+    description:
+      "Commemoration of the passing of Lady Zaynab bint Ali, heroine of Karbala.",
+    event_type: "others",
+    event_date: "15-rajab",
+  },
+  {
+    id: "080",
+    title: "Martyrdom of Imam Musa al-Kazim",
+    description:
+      "Commemoration of the martyrdom of the seventh Imam, Musa ibn Ja'far al-Kazim.",
+    event_type: "martyrdom",
+    event_date: "25-rajab",
+  },
+  {
+    id: "081",
+    title: "Mab'ath – Beginning of Prophethood",
+    description:
+      "Commemoration of the day Prophet Muhammad received the first revelation and was appointed as the Messenger of Allah.",
+    event_type: "celebration",
+    event_date: "27-rajab",
+  },
+];
+
+//month 8
+
+const shaban: CalendarEvent[] = [
+  {
+    id: "082",
+    title: "Birth of Imam Husayn ibn Ali",
+    description:
+      "Celebration of the birth of the third Imam, Husayn ibn Ali, the grandson of the Prophet and the leader of the martyrs of Karbala.",
+    event_type: "celebration",
+    event_date: "3-shaban",
+  },
+  {
+    id: "083",
+    title: "Birth of Abbas ibn Ali",
+    description:
+      "Celebration of the birth of Abbas ibn Ali, the standard-bearer of Karbala and symbol of loyalty and courage.",
+    event_type: "celebration",
+    event_date: "4-shaban",
+  },
+  {
+    id: "084",
+    title: "Birth of Imam Ali ibn Husayn (Zayn al-Abidin)",
+    description:
+      "Celebration of the birth of the fourth Imam, Ali ibn Husayn, known as Zayn al-Abidin and author of Sahifa al-Sajjadiyya.",
+    event_type: "celebration",
+    event_date: "5-shaban",
+  },
+  {
+    id: "085",
+    title: "Birth of Ali al-Akbar ibn Husayn",
+    description:
+      "Celebration of the birth of Ali al-Akbar, son of Imam Husayn, who was martyred in Karbala.",
+    event_type: "celebration",
+    event_date: "11-shaban",
+  },
+  {
+    id: "086",
+    title: "Birth of Imam Muhammad al-Mahdi (Imam al-Zamana)",
+    description:
+      "Celebration of the birth of the twelfth Imam, Muhammad ibn Hasan al-Mahdi, the awaited savior in Shia belief.",
+    event_type: "celebration",
+    event_date: "15-shaban",
+  },
+  {
+    id: "087",
+    title: "Laylat al-Bara'at (Shab-e-Barat)",
+    description:
+      "The Night of Emancipation, observed with prayers and supplication; in Shia tradition it coincides with the birth anniversary of Imam al-Mahdi.",
+    event_type: "commemoration",
+    event_date: "15-shaban",
+  },
+];
+//month 9
 const ramadan: CalendarEvent[] = [
   {
     id: "037",
@@ -250,12 +434,152 @@ const ramadan: CalendarEvent[] = [
   },
 ];
 
+//month 10
+const shawwal: CalendarEvent[] = [
+  {
+    id: "088",
+    title: "Eid al-Fitr",
+    description:
+      "Celebration marking the end of the blessed month of Ramadan; a day of prayer, charity (Zakat al-Fitr), and gratitude.",
+    event_type: "celebration",
+    event_date: "1-shawwal",
+  },
+  {
+    id: "089",
+    title: "Battle of Hunayn",
+    description:
+      "Commemoration of the Battle of Hunayn in 8 AH, fought shortly after the conquest of Mecca.",
+    event_type: "historical",
+    event_date: "10-shawwal",
+  },
+  {
+    id: "090",
+    title: "Demolition of Jannat al-Baqi",
+    description:
+      "Commemoration of the destruction of the graves in Jannat al-Baqi cemetery in Medina in 1344 AH.",
+    event_type: "commemoration",
+    event_date: "8-shawwal",
+  },
+  {
+    id: "091",
+    title: "Martyrdom of Imam Ja'far al-Sadiq",
+    description:
+      "Commemoration of the martyrdom of the sixth Imam, Ja'far ibn Muhammad al-Sadiq, renowned scholar and teacher of Islamic jurisprudence.",
+    event_type: "martyrdom",
+    event_date: "25-shawwal",
+  },
+];
+
+//month 11
+const dhulQadah: CalendarEvent[] = [
+  {
+    id: "092",
+    title: "Birth of Lady Fatimah al-Ma'sumah",
+    description:
+      "Celebration of the birth of Lady Fatimah al-Ma'sumah, daughter of Imam Musa al-Kazim and sister of Imam Ali al-Rida, revered for her knowledge and piety.",
+    event_type: "celebration",
+    event_date: "1-dhul-qadah",
+  },
+  {
+    id: "093",
+    title: "Birth of Imam Ali al-Rida",
+    description:
+      "Celebration of the birth of the eighth Imam, Ali ibn Musa al-Rida.",
+    event_type: "celebration",
+    event_date: "11-dhul-qadah",
+  },
+  {
+    id: "094",
+    title: "Martyrdom of Imam Muhammad al-Taqi (al-Jawad)",
+    description:
+      "Commemoration of the martyrdom of the ninth Imam, Muhammad ibn Ali al-Jawad.",
+    event_type: "martyrdom",
+    event_date: "29-dhul-qadah",
+  },
+];
+
+//month 12
+
+const dhulHijjah: CalendarEvent[] = [
+  {
+    id: "095",
+    title: "Marriage of Imam Ali and Lady Fatimah",
+    description:
+      "Celebration of the blessed marriage of Imam Ali ibn Abi Talib and Lady Fatimah al-Zahra, regarded as the ideal Islamic union.",
+    event_type: "celebration",
+    event_date: "1-dhul-hijjah",
+  },
+  {
+    id: "096",
+    title: "Martyrdom of Imam Muhammad al-Baqir",
+    description:
+      "Commemoration of the martyrdom of the fifth Imam, Muhammad ibn Ali al-Baqir, renowned for spreading Islamic knowledge.",
+    event_type: "martyrdom",
+    event_date: "7-dhul-hijjah",
+  },
+  {
+    id: "097",
+    title: "Day of Tarwiyah",
+    description:
+      "Commemoration of the day pilgrims begin the rites of Hajj and proceed toward Mina.",
+    event_type: "commemoration",
+    event_date: "8-dhul-hijjah",
+  },
+  {
+    id: "098",
+    title: "Day of Arafah & Martyrdom of Muslim ibn Aqil",
+    description:
+      "Day of supplication and worship during Hajj; also commemorates the martyrdom of Muslim ibn Aqil, envoy of Imam Husayn, and Hani ibn Urwah.",
+    event_type: "commemoration",
+    event_date: "9-dhul-hijjah",
+  },
+  {
+    id: "099",
+    title: "Eid al-Adha",
+    description:
+      "Celebration of sacrifice commemorating Prophet Ibrahim’s devotion and willingness to sacrifice for Allah.",
+    event_type: "celebration",
+    event_date: "10-dhul-hijjah",
+  },
+  {
+    id: "100",
+    title: "Eid al-Ghadir",
+    description:
+      "Celebration of the declaration at Ghadir Khumm where Prophet Muhammad publicly appointed Imam Ali as his successor.",
+    event_type: "celebration",
+    event_date: "18-dhul-hijjah",
+  },
+  {
+    id: "101",
+    title: "Day of Mubahala",
+    description:
+      "Commemoration of the event of Mubahala between the Prophet and the Christians of Najran, demonstrating the spiritual status of the Ahl al-Bayt.",
+    event_type: "historical",
+    event_date: "24-dhul-hijjah",
+  },
+  {
+    id: "102",
+    title: "Revelation of Surah al-Insan (Hal Ata)",
+    description:
+      "Commemoration of the revelation honoring the Ahl al-Bayt for their selfless charity to the needy, the orphan, and the captive.",
+    event_type: "historical",
+    event_date: "25-dhul-hijjah",
+  },
+];
+
 const events: CalendarEvent[] = [
   ...muharram,
   ...safar,
   ...rabiAlAwwal,
   ...rabiAlThani,
+  ...jumadaAlAwwal,
+  ...jumadaAlThani,
+  ...rajab,
+  ...shaban,
   ...ramadan,
+  ...shawwal,
+  ...dhulQadah,
+  ...dhulHijjah,
 ];
 
 export default events;

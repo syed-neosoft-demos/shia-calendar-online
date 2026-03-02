@@ -61,6 +61,7 @@ export default function Calendar() {
       <div className="bg-gray-950 p-4 md:p-8 min-h-screen text-white"></div>
     );
   }
+
   return (
     <div className="bg-gray-950 p-4 md:p-8 min-h-screen text-white">
       <div className="mx-auto max-w-7xl">
@@ -136,7 +137,7 @@ export default function Calendar() {
                     onClick={() =>
                       day.hijriDate?.day &&
                       handleDayClick(
-                        `${day.hijriDate.day}-${day.hijriDate.monthName}`,
+                        `${day.hijriDate.day}-${day.hijriDate.monthName?.replace?.(" ", "-").toLowerCase()}`,
                         day.date,
                       )
                     }
