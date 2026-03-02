@@ -122,119 +122,140 @@ const safar: CalendarEvent[] = [
 
 const rabiAlAwwal: CalendarEvent[] = [
   {
-    "id": "031",
-    "title": "Hijrah of Prophet Muhammad",
-    "description": "Commemoration of the migration (Hijrah) of Prophet Muhammad from Mecca to Medina.",
-    "event_type": "historical",
-    "event_date": "1-rabi-al-awwal"
+    id: "031",
+    title: "Hijrah of Prophet Muhammad",
+    description:
+      "Commemoration of the migration (Hijrah) of Prophet Muhammad from Mecca to Medina.",
+    event_type: "historical",
+    event_date: "1-rabi-al-awwal",
   },
   {
-    "id": "032",
-    "title": "Martyrdom of Imam Hasan al-Askari",
-    "description": "Commemoration of the martyrdom of the eleventh Imam, Hasan ibn Ali al-Askari.",
-    "event_type": "martyrdom",
-    "event_date": "8-rabi-al-awwal"
+    id: "032",
+    title: "Martyrdom of Imam Hasan al-Askari",
+    description:
+      "Commemoration of the martyrdom of the eleventh Imam, Hasan ibn Ali al-Askari.",
+    event_type: "martyrdom",
+    event_date: "8-rabi-al-awwal",
   },
   {
-    "id": "033",
-    "title": "Beginning of the Imamate of Imam al-Mahdi",
-    "description": "Commemoration of the commencement of the Imamate of Imam Muhammad ibn Hasan al-Mahdi.",
-    "event_type": "commemoration",
-    "event_date": "9-rabi-al-awwal"
+    id: "033",
+    title: "Beginning of the Imamate of Imam al-Mahdi",
+    description:
+      "Commemoration of the commencement of the Imamate of Imam Muhammad ibn Hasan al-Mahdi.",
+    event_type: "commemoration",
+    event_date: "9-rabi-al-awwal",
   },
   {
-    "id": "034",
-    "title": "Marriage of Prophet Muhammad and Lady Khadijah",
-    "description": "Commemoration of the blessed marriage of Prophet Muhammad and Lady Khadijah bint Khuwaylid.",
-    "event_type": "commemoration",
-    "event_date": "10-rabi-al-awwal"
+    id: "034",
+    title: "Marriage of Prophet Muhammad and Lady Khadijah",
+    description:
+      "Commemoration of the blessed marriage of Prophet Muhammad and Lady Khadijah bint Khuwaylid.",
+    event_type: "commemoration",
+    event_date: "10-rabi-al-awwal",
   },
   {
-    "id": "035",
-    "title": "Birth of Prophet Muhammad",
-    "description": "Celebration of the birth of Prophet Muhammad (according to Shia tradition).",
-    "event_type": "celebration",
-    "event_date": "17-rabi-al-awwal"
+    id: "035",
+    title: "Birth of Prophet Muhammad",
+    description:
+      "Celebration of the birth of Prophet Muhammad (according to Shia tradition).",
+    event_type: "celebration",
+    event_date: "17-rabi-al-awwal",
   },
   {
-    "id": "036",
-    "title": "Birth of Imam Ja'far al-Sadiq",
-    "description": "Celebration of the birth of the sixth Imam, Ja'far ibn Muhammad al-Sadiq.",
-    "event_type": "celebration",
-    "event_date": "17-rabi-al-awwal"
-  }
-]
+    id: "036",
+    title: "Birth of Imam Ja'far al-Sadiq",
+    description:
+      "Celebration of the birth of the sixth Imam, Ja'far ibn Muhammad al-Sadiq.",
+    event_type: "celebration",
+    event_date: "17-rabi-al-awwal",
+  },
+];
 
 //month 4
 const rabiAlThani: CalendarEvent[] = [
   {
-    "id": "044",
-    "title": "Birth of Imam Hasan al-Askari",
-    "description": "Celebration of the birth of the eleventh Imam, Hasan ibn Ali al-Askari.",
-    "event_type": "celebration",
-    "event_date": "8-rabi-al-thani"
+    id: "044",
+    title: "Birth of Imam Hasan al-Askari",
+    description:
+      "Celebration of the birth of the eleventh Imam, Hasan ibn Ali al-Askari.",
+    event_type: "celebration",
+    event_date: "8-rabi-al-thani",
   },
   {
-    "id": "045",
-    "title": "Demise of Lady Fatima al-Ma'suma",
-    "description": "Commemoration of the passing of Lady Fatima bint Musa al-Kazim, sister of Imam Ali al-Rida, buried in Qom.",
-    "event_type": "martyrdom",
-    "event_date": "10-rabi-al-thani"
-  }
-]
+    id: "045",
+    title: "Demise of Lady Fatima al-Ma'suma",
+    description:
+      "Commemoration of the passing of Lady Fatima bint Musa al-Kazim, sister of Imam Ali al-Rida, buried in Qom.",
+    event_type: "martyrdom",
+    event_date: "10-rabi-al-thani",
+  },
+];
 
+//month 5
 const ramadan: CalendarEvent[] = [
   {
-    "id": "037",
-    "title": "Beginning of the Month of Ramadan",
-    "description": "Commencement of the blessed month of fasting, prayer, and revelation of the Qur'an.",
-    "event_type": "commemoration",
-    "event_date": "1-ramadan"
+    id: "037",
+    title: "Beginning of the Month of Ramadan",
+    description:
+      "Commencement of the blessed month of fasting, prayer, and revelation of the Qur'an.",
+    event_type: "commemoration",
+    event_date: "1-ramadan",
   },
   {
-    "id": "038",
-    "title": "Demise of Lady Khadijah",
-    "description": "Commemoration of the passing of Lady Khadijah bint Khuwaylid, the first believer and wife of the Prophet.",
-    "event_type": "martyrdom",
-    "event_date": "10-ramadan"
+    id: "038",
+    title: "Demise of Lady Khadijah",
+    description:
+      "Commemoration of the passing of Lady Khadijah bint Khuwaylid, the first believer and wife of the Prophet.",
+    event_type: "martyrdom",
+    event_date: "10-ramadan",
   },
   {
-    "id": "039",
-    "title": "Birth of Imam Hasan al-Mujtaba",
-    "description": "Celebration of the birth of the second Imam, Hasan ibn Ali.",
-    "event_type": "celebration",
-    "event_date": "15-ramadan"
+    id: "039",
+    title: "Birth of Imam Hasan al-Mujtaba",
+    description: "Celebration of the birth of the second Imam, Hasan ibn Ali.",
+    event_type: "celebration",
+    event_date: "15-ramadan",
   },
   {
-    "id": "040",
-    "title": "Battle of Badr",
-    "description": "Commemoration of the first major battle of Islam in which the Muslims achieved victory.",
-    "event_type": "historical",
-    "event_date": "17-ramadan"
+    id: "040",
+    title: "Battle of Badr",
+    description:
+      "Commemoration of the first major battle of Islam in which the Muslims achieved victory.",
+    event_type: "historical",
+    event_date: "17-ramadan",
   },
   {
-    "id": "041",
-    "title": "Striking of Imam Ali",
-    "description": "Commemoration of the night Imam Ali ibn Abi Talib was struck by Ibn Muljam while in prayer in Kufa.",
-    "event_type": "martyrdom",
-    "event_date": "19-ramadan"
+    id: "041",
+    title: "Striking of Imam Ali",
+    description:
+      "Commemoration of the night Imam Ali ibn Abi Talib was struck by Ibn Muljam while in prayer in Kufa.",
+    event_type: "martyrdom",
+    event_date: "19-ramadan",
   },
   {
-    "id": "042",
-    "title": "Martyrdom of Imam Ali",
-    "description": "Commemoration of the martyrdom of the first Imam, Ali ibn Abi Talib.",
-    "event_type": "martyrdom",
-    "event_date": "21-ramadan"
+    id: "042",
+    title: "Martyrdom of Imam Ali",
+    description:
+      "Commemoration of the martyrdom of the first Imam, Ali ibn Abi Talib.",
+    event_type: "martyrdom",
+    event_date: "21-ramadan",
   },
   {
-    "id": "043",
-    "title": "Laylat al-Qadr",
-    "description": "The Night of Decree, regarded as the greatest night of the year; widely observed on the 23rd of Ramadan in Shia tradition.",
-    "event_type": "commemoration",
-    "event_date": "23-ramadan"
-  }
-]
+    id: "043",
+    title: "Laylat al-Qadr",
+    description:
+      "The Night of Decree, regarded as the greatest night of the year; widely observed on the 23rd of Ramadan in Shia tradition.",
+    event_type: "commemoration",
+    event_date: "23-ramadan",
+  },
+];
 
-const events: CalendarEvent[] = [...muharram, ...safar, ...rabiAlAwwal, ...rabiAlThani, ...ramadan];
+const events: CalendarEvent[] = [
+  ...muharram,
+  ...safar,
+  ...rabiAlAwwal,
+  ...rabiAlThani,
+  ...ramadan,
+];
 
 export default events;

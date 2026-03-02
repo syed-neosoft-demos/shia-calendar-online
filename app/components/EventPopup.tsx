@@ -3,7 +3,6 @@ import { EventPopupProps } from "@/app/utils/types";
 
 export function EventPopup({ isOpen, onClose, events, date }: EventPopupProps) {
   if (!isOpen || !date) return null;
-
   const getEventColor = (type: string) => {
     switch (type) {
       case "celebration":

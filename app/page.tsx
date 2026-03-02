@@ -45,8 +45,8 @@ export default function Calendar() {
     setSelectedDate(new Date());
   };
 
-  const handleDayClick = (date: string) => {
-    setSelectedDate(new Date());
+  const handleDayClick = (date: string, engDate: Date | null = new Date()) => {
+    setSelectedDate(engDate);
     setSelectedEvent(date);
     const dayEvents = getEventsForDate(date);
     if (dayEvents.length > 0) {
@@ -57,9 +57,10 @@ export default function Calendar() {
   const calendarDays = generateCalendarDays(year, month);
   const months = new Set(calendarDays.map((el) => el.hijriDate?.monthName));
   if (!isMounted) {
-    return <div className="bg-gray-950 p-4 md:p-8 min-h-screen text-white"></div>;
+    return (
+      <div className="bg-gray-950 p-4 md:p-8 min-h-screen text-white"></div>
+    );
   }
-
   return (
     <div className="bg-gray-950 p-4 md:p-8 min-h-screen text-white">
       <div className="mx-auto max-w-7xl">
@@ -95,7 +96,8 @@ export default function Calendar() {
                   </div>
                 </div>
                 <p className="text-gray-400">
-                  {[...months].join(", ").replace(",", " - ")}
+                  {[...months].join(", ").replace(",", " - ") +
+                    ` ${calendarDays[calendarDays?.length - 1]?.hijriDate?.year ?? ""}`}
                 </p>
               </div>
 
@@ -135,15 +137,15 @@ export default function Calendar() {
                       day.hijriDate?.day &&
                       handleDayClick(
                         `${day.hijriDate.day}-${day.hijriDate.monthName}`,
+                        day.date,
                       )
                     }
                     hijriDate={day.hijriDate}
                   />
                 ))}
               </div>
-
             </div>
-            <div className="bg-gray-900 p-6 border border-gray-800 rounded-lg mt-5">
+            <div className="bg-gray-900 mt-5 p-6 border border-gray-800 rounded-lg">
               <div className="mb-6">
                 <Quats />
               </div>

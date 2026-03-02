@@ -28,7 +28,19 @@ export function EventsSidebar({
         return "bg-yellow-400";
     }
   };
-
+  const getDate = (eventDate: string) => {
+    const [day, monthName] = eventDate.split("-");
+    const dayNumber = parseInt(day, 10);
+    const matchedDay = calendarDays.find(
+      (day: any) =>
+        day.hijriDate?.day === dayNumber &&
+        day.hijriDate?.monthName?.toLocaleLowerCase() ===
+          monthName.toLocaleLowerCase(),
+    );
+    return (
+      matchedDay?.date?.toLocaleDateString("en-GB").replaceAll("/", "-") || ""
+    );
+  };
   return (
     <div className="bg-gray-900 p-6 border border-gray-800 rounded-lg">
       <h2 className="mb-6 font-bold text-white text-2xl">
@@ -53,9 +65,12 @@ export function EventsSidebar({
                     {event.title}
                   </h3>
                   <p className="mb-1 text-gray-400 text-sm">
+                    {getDate(event.event_date)}
+                  </p>
+                  <p className="mb-1 text-gray-400 text-sm">
                     {event.event_date}
                   </p>
-                  {/* <p className="text-gray-500 text-sm">{event.event_date}</p> */}
+
                   {event.description && (
                     <p className="mt-2 text-gray-300 text-sm">
                       {event.description}

@@ -17,7 +17,7 @@ export const MONTH_NAMES = [
   "December",
 ];
 
-const HIJRI_MONTHS = [
+export const HIJRI_MONTHS = [
   "Muharram",
   "Safar",
   "Rabi al-Awwal",
@@ -32,7 +32,7 @@ const HIJRI_MONTHS = [
   "Dhul Hijjah",
 ];
 
-let globalShift: number = -2;
+const globalShift: number = -2;
 
 const ISLAMIC_EPOCH: number = 1948439;
 
@@ -63,22 +63,6 @@ function islamicToJD(year: number, month: number, day: number): number {
     ISLAMIC_EPOCH -
     1
   );
-}
-
-function isLeapYear(year: number): boolean {
-  return (11 * year + 14) % 30 < 11;
-}
-
-function defaultMonthLength(year: number, month: number): 29 | 30 {
-  if (month % 2 === 1) return 30;
-
-  if (month !== 12) return 29;
-
-  return isLeapYear(year) ? 30 : 29;
-}
-
-function getMonthLength(year: number, month: number): 29 | 30 {
-  return defaultMonthLength(year, month);
 }
 
 function jdToIslamic(jd: number): IslamicDate {
@@ -120,20 +104,7 @@ export function getIslamicDate(
 }
 
 export function formatIslamic(date: IslamicDate): HijriDate {
-  const names: string[] = [
-    "Muharram",
-    "Safar",
-    "Rabi al-Awwal",
-    "Rabi al-Thani",
-    "Jumada al-Awwal",
-    "Jumada al-Thani",
-    "Rajab",
-    "Sha'ban",
-    "Ramadan",
-    "Shawwal",
-    "Dhul Qadah",
-    "Dhul Hijjah",
-  ];
+  const names = HIJRI_MONTHS;
   const payload = {
     day: date.day,
     month: date.month,
@@ -144,50 +115,3 @@ export function formatIslamic(date: IslamicDate): HijriDate {
 
   // return `${date.day} ${names[date.month - 1]} ${date.year} AH`;
 }
-
-function gregorianToHijri(date: Date): HijriDate {
-  const gYear = date.getFullYear();
-  const gMonth = date.getMonth() + 1;
-  const gDay = date.getDate();
-
-  let julianDay: number;
-
-  if (gMonth <= 2) {
-    const adjustedYear = gYear - 1;
-    const adjustedMonth = gMonth + 12;
-    julianDay =
-      Math.floor(365.25 * (adjustedYear + 4716)) +
-      Math.floor(30.6001 * (adjustedMonth + 1)) +
-      gDay -
-      1524.5;
-  } else {
-    julianDay =
-      Math.floor(365.25 * (gYear + 4716)) +
-      Math.floor(30.6001 * (gMonth + 1)) +
-      gDay -
-      1524.5;
-  }
-
-  const l = julianDay - 1948440 + 10632;
-  const n = Math.floor((l - 1) / 10631);
-  const l2 = l - 10631 * n + 354;
-  const j =
-    Math.floor((10985 - l2) / 5316) * Math.floor((50 * l2) / 17719) +
-    Math.floor(l2 / 5670) * Math.floor((43 * l2) / 15238);
-  const l3 =
-    l2 -
-    Math.floor((30 - j) / 15) * Math.floor((17719 * j) / 50) -
-    Math.floor(j / 16) * Math.floor((15238 * j) / 43) +
-    29;
-  const hMonth = Math.floor((24 * l3) / 709);
-  const hDay = l3 - Math.floor((709 * hMonth) / 24);
-  const hYear = 30 * n + j - 30;
-
-  return {
-    year: hYear,
-    month: hMonth,
-    day: hDay,
-    monthName: HIJRI_MONTHS[hMonth - 1],
-  };
-}
-
