@@ -14,7 +14,6 @@ export function CalendarDay({
   const events: CalendarEvent[] = getEventsForDate(
     `${hijriDate?.day}-${hijriDate?.monthName?.replace?.(" ", "-").toLowerCase()}`,
   );
-
   return (
     <button
       onClick={onClick}
@@ -47,9 +46,10 @@ export function CalendarDay({
           )}
           {events.filter((e) => e.event_type === "commemoration")?.length >
             0 && <div className="bg-blue-400 rounded-full w-1.5 h-1.5" />}
-          {events.filter(
-            (e) => e.event_type === "historical" || e.event_type === "others",
-          )?.length > 0 && (
+          {events.filter((e) => e.event_type === "historical")?.length > 0 && (
+            <div className="bg-yellow-400 rounded-full w-1.5 h-1.5" />
+          )}
+          {events.filter((e) => e.event_type === "others")?.length > 0 && (
             <div className="bg-yellow-400 rounded-full w-1.5 h-1.5" />
           )}
         </div>

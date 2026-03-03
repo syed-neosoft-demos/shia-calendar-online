@@ -55,7 +55,9 @@ export default function Calendar() {
   };
 
   const calendarDays = generateCalendarDays(year, month);
-  const months = new Set(calendarDays.map((el) => el.hijriDate?.monthName));
+  const months = new Set(
+    calendarDays.map((el) => el.hijriDate?.monthName).filter(Boolean),
+  );
   if (!isMounted) {
     return (
       <div className="bg-gray-950 p-4 md:p-8 min-h-screen text-white"></div>
@@ -97,8 +99,8 @@ export default function Calendar() {
                   </div>
                 </div>
                 <p className="text-gray-400">
-                  {[...months].join(", ").replace(",", " - ") +
-                    ` ${calendarDays[calendarDays?.length - 1]?.hijriDate?.year ?? ""}`}
+                  {[...months].join(", ").replaceAll(",", " - ") +
+                    ` ${calendarDays[calendarDays?.length - 1]?.hijriDate?.year ?? ""}H`}
                 </p>
               </div>
 
