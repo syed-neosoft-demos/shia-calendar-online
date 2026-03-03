@@ -20,7 +20,7 @@ const QUOTES_DATA = [
 
 const Quats = () => {
   return (
-    <>
+    <div className="mb-6">
       <div className="bg-gray-900 my-5 p-6 border border-gray-800 rounded-lg w-full">
         <h2 className="flex items-center gap-2 mb-6 font-bold text-white text-2xl">
           <Quote className="text-gray-400" size={24} /> Inspire Daily
@@ -71,7 +71,7 @@ const Quats = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

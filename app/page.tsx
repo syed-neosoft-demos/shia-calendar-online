@@ -146,10 +146,8 @@ export default function Calendar() {
                 ))}
               </div>
             </div>
-            <div className="bg-gray-900 mt-5 p-6 border border-gray-800 rounded-lg">
-              <div className="mb-6">
-                <Quats />
-              </div>
+            <div className="hidden lg:block bg-gray-900 mt-5 p-6 border border-gray-800 rounded-lg">
+              <Quats />
             </div>
           </div>
           <div className="lg:col-span-1">
@@ -170,6 +168,17 @@ export default function Calendar() {
           date={selectedDate}
         />
       )}
+
+      <div className="pt-3 text-center">
+        <a
+          href="http://linkedin.com/in/syed-hasnain-mehadi"
+          target="blank"
+          className="text-xs"
+        >
+          Developed by{" "}
+          <span className="font-semibold">Syed Hasnain Mehadi</span>
+        </a>
+      </div>
     </div>
   );
 }
