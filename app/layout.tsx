@@ -19,18 +19,21 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://shia-calendar-online.vercel.app"),
   title: {
-    default: "Shia Calendar Online",
-    template: "%s | Shia Calendar",
+    default: "Shia Calendar Online | Islamic Dates & Events",
+    template: "%s | Shia Calendar Online",
   },
-  description: "Accurate Shia Islamic calendar with events and dates.",
-  keywords: ["Shia Calendar", "Islamic Calendar", "Hijri Calendar", "Shia Events"],
+  description: "Find accurate Shia Islamic calendar dates, Islamic events, and Hijri dates online. Your go-to Shia Calendar Online.",
+  keywords: ["Shia Calendar Online", "Shia Calendar", "Islamic Calendar", "Hijri Calendar", "Shia Events", "Accurate Shia Calendar"],
+  alternates: {
+    canonical: "https://shia-calendar-online.vercel.app",
+  },
   authors: [{ name: "Shia Calendar Online" }],
   creator: "Shia Calendar Online",
   openGraph: {
-    title: "Shia Calendar Online",
-    description: "Accurate Shia Islamic calendar with events and dates.",
+    title: "Shia Calendar Online | Islamic Dates & Events",
+    description: "Find accurate Shia Islamic calendar dates, Islamic events, and Hijri dates online. Your go-to Shia Calendar Online.",
     url: "https://shia-calendar-online.vercel.app",
-    siteName: "Shia Calendar",
+    siteName: "Shia Calendar Online",
     locale: "en_US",
     type: "website",
   },

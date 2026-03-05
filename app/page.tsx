@@ -73,9 +73,9 @@ export default function Calendar() {
             <div className="bg-gray-900 p-6 border border-gray-800 rounded-lg">
               <div className="mb-6">
                 <div className="flex justify-between items-center mb-2">
-                  <h1 className="font-bold text-3xl">
+                  <h2 className="font-bold text-3xl">
                     {MONTH_NAMES[month]} {year}
-                  </h1>
+                  </h2>
                   <div className="flex gap-2">
                     <button
                       onClick={goToToday}
