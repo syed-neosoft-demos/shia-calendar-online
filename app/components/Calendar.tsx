@@ -1,5 +1,6 @@
 import { CalendarDayProps, CalendarEvent } from "@/app/utils/types";
 import { getEventsForDate } from "../utils/helper";
+import { getHijriDateKey } from "../utils/date";
 export function CalendarDay({
   day,
   isCurrentMonth,
@@ -12,7 +13,7 @@ export function CalendarDay({
     return <div className="aspect-square" />;
   }
   const events: CalendarEvent[] = getEventsForDate(
-    `${hijriDate?.day}-${hijriDate?.monthName?.replace?.(" ", "-").toLowerCase()}`,
+    getHijriDateKey(hijriDate),
   );
   return (
     <button

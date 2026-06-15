@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ExternalLink } from "lucide-react";
 import { EventsSidebarProps } from "../utils/types";
+import { getHijriDateKey } from "../utils/date";
 
 export function EventsSidebar({
   events,
@@ -10,11 +11,7 @@ export function EventsSidebar({
 }: EventsSidebarProps) {
   const matchedEvents = events.filter((event) =>
     calendarDays.some((day: any) =>
-      event.event_date.includes(
-        day.hijriDate?.day +
-          "-" +
-          day.hijriDate?.monthName?.replace?.(" ", "-").toLowerCase(),
-      ),
+      event.event_date === getHijriDateKey(day.hijriDate),
     ),
   );
 
@@ -22,20 +19,17 @@ export function EventsSidebar({
     switch (type) {
       case "celebration":
         return "bg-green-400";
-      case "commemoration":
+      case "martyrdom":
         return "bg-red-400";
+      case "commemoration":
+        return "bg-blue-400";
       default:
         return "bg-yellow-400";
     }
   };
   const getDate = (eventDate: string) => {
-    const [day, monthName] = eventDate.split("-");
-    const dayNumber = parseInt(day, 10);
     const matchedDay = calendarDays.find(
-      (day: any) =>
-        day.hijriDate?.day === dayNumber &&
-        day.hijriDate?.monthName?.toLocaleLowerCase() ===
-          monthName.toLocaleLowerCase(),
+      (day: any) => getHijriDateKey(day.hijriDate) === eventDate,
     );
     return (
       matchedDay?.date?.toLocaleDateString("en-GB").replaceAll("/", "-") || ""

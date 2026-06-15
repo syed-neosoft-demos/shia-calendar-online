@@ -36,7 +36,7 @@ const Quats = () => {
                 <div className="flex-shrink-0 bg-blue-400 mt-2 rounded-full w-2 h-2" />
                 <div className="flex-1">
                   <p className="mb-2 text-gray-300 text-sm md:text-base italic leading-relaxed">
-                    "{quote.text}"
+                    &quot;{quote.text}&quot;
                   </p>
                   <div className="flex justify-end mt-2">
                     <span className="font-medium text-gray-400 text-xs md:text-sm">
