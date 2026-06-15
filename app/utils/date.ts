@@ -32,63 +32,25 @@ export const HIJRI_MONTHS = [
   "Dhul Hijjah",
 ];
 
-const globalShift: number = -2;
+const globalShift: number = -1;
 
-const ISLAMIC_EPOCH: number = 1948439;
+const ISLAMIC_CALENDAR = "en-u-ca-islamic-umalqura";
+const ISLAMIC_FORMATTER = new Intl.DateTimeFormat(ISLAMIC_CALENDAR, {
+  day: "numeric",
+  month: "numeric",
+  timeZone: "UTC",
+  year: "numeric",
+});
 
-function gregorianToJD(y: number, m: number, d: number): number {
-  if (m <= 2) {
-    y -= 1;
-    m += 12;
+function getDatePart(
+  parts: Intl.DateTimeFormatPart[],
+  type: Intl.DateTimeFormatPartTypes,
+): number {
+  const value = parts.find((part) => part.type === type)?.value;
+  if (!value) {
+    throw new Error(`Missing Islamic date part: ${type}`);
   }
-
-  const A = Math.floor(y / 100);
-  const B = 2 - A + Math.floor(A / 4);
-
-  return (
-    Math.floor(365.25 * (y + 4716)) +
-    Math.floor(30.6001 * (m + 1)) +
-    d +
-    B -
-    1524
-  );
-}
-
-function islamicToJD(year: number, month: number, day: number): number {
-  return (
-    day +
-    Math.ceil(29.5 * (month - 1)) +
-    (year - 1) * 354 +
-    Math.floor((3 + 11 * year) / 30) +
-    ISLAMIC_EPOCH -
-    1
-  );
-}
-
-function jdToIslamic(jd: number): IslamicDate {
-  jd = Math.floor(jd) + 0.5;
-
-  const days = jd - ISLAMIC_EPOCH;
-
-  const year = Math.floor((30 * days + 10646) / 10631);
-
-  const firstDayOfYear = islamicToJD(year, 1, 1);
-
-  let month = Math.ceil((jd - firstDayOfYear + 1) / 29.5);
-
-  if (month > 12) month = 12;
-
-  let firstDayOfMonth = islamicToJD(year, month, 1);
-
-  // 🔥 FIX: adjust month if overshoot
-  if (jd < firstDayOfMonth) {
-    month--;
-    firstDayOfMonth = islamicToJD(year, month, 1);
-  }
-
-  const day = Math.floor(jd - firstDayOfMonth + 1);
-
-  return { year, month, day };
+  return Number(value.replace(/\D/g, ""));
 }
 
 export function getIslamicDate(
@@ -96,11 +58,16 @@ export function getIslamicDate(
   gMonth: number,
   gDay: number,
 ): IslamicDate {
-  let jd = gregorianToJD(gYear, gMonth, gDay);
+  const date = new Date(Date.UTC(gYear, gMonth - 1, gDay));
+  date.setUTCDate(date.getUTCDate() + globalShift);
 
-  jd += globalShift;
+  const parts = ISLAMIC_FORMATTER.formatToParts(date);
 
-  return jdToIslamic(jd);
+  return {
+    day: getDatePart(parts, "day"),
+    month: getDatePart(parts, "month"),
+    year: getDatePart(parts, "year"),
+  };
 }
 
 export function formatIslamic(date: IslamicDate): HijriDate {
@@ -114,4 +81,15 @@ export function formatIslamic(date: IslamicDate): HijriDate {
   return payload;
 
   // return `${date.day} ${names[date.month - 1]} ${date.year} AH`;
+}
+
+export function getHijriMonthSlug(monthName: string): string {
+  return monthName.trim().toLowerCase().replace(/\s+/g, "-");
+}
+
+export function getHijriDateKey(
+  date: Pick<HijriDate, "day" | "monthName"> | null | undefined,
+): string {
+  if (!date?.day || !date.monthName) return "";
+  return `${date.day}-${getHijriMonthSlug(date.monthName)}`;
 }

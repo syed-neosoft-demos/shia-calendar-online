@@ -5,7 +5,7 @@ import { CalendarDay } from "./components/Calendar";
 import { EventsSidebar } from "./components/EventSidebar";
 import { EventPopup } from "./components/EventPopup";
 import Header from "./components/Header";
-import { DAYS_OF_WEEK, MONTH_NAMES } from "./utils/date";
+import { DAYS_OF_WEEK, getHijriDateKey, MONTH_NAMES } from "./utils/date";
 import events from "./utils/events";
 import {
   generateCalendarDays,
@@ -55,9 +55,15 @@ export default function Calendar() {
   };
 
   const calendarDays = generateCalendarDays(year, month);
-  const months = new Set(
-    calendarDays.map((el) => el.hijriDate?.monthName).filter(Boolean),
-  );
+  const hijriMonthLabels = calendarDays.reduce<string[]>((labels, day) => {
+    const hijriDate = day.hijriDate;
+    if (!hijriDate?.monthName) return labels;
+
+    const label = `${hijriDate.monthName} ${hijriDate.year}H`;
+    if (!labels.includes(label)) labels.push(label);
+
+    return labels;
+  }, []);
   if (!isMounted) {
     return (
       <div className="bg-gray-950 p-4 md:p-8 min-h-screen text-white"></div>
@@ -99,8 +105,7 @@ export default function Calendar() {
                   </div>
                 </div>
                 <p className="text-gray-400">
-                  {[...months].join(", ").replaceAll(",", " - ") +
-                    ` ${calendarDays[calendarDays?.length - 1]?.hijriDate?.year ?? ""}H`}
+                  {hijriMonthLabels.join(" - ")}
                 </p>
               </div>
 
@@ -111,6 +116,10 @@ export default function Calendar() {
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="bg-red-400 rounded-full w-3 h-3" />
+                  <span className="text-gray-300 text-sm">Martyrdom</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="bg-blue-400 rounded-full w-3 h-3" />
                   <span className="text-gray-300 text-sm">Commemoration</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -138,10 +147,7 @@ export default function Calendar() {
                     isSelected={isSelected(day.date, selectedDate)}
                     onClick={() =>
                       day.hijriDate?.day &&
-                      handleDayClick(
-                        `${day.hijriDate.day}-${day.hijriDate.monthName?.replace?.(" ", "-").toLowerCase()}`,
-                        day.date,
-                      )
+                      handleDayClick(getHijriDateKey(day.hijriDate), day.date)
                     }
                     hijriDate={day.hijriDate}
                   />
