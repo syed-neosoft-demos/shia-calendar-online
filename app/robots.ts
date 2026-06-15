@@ -1,11 +1,14 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from "next";
+
+const siteUrl = "https://shia-calendar-online.vercel.app";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
-      userAgent: '*',
-      allow: '/',
+      userAgent: "*",
+      allow: "/",
     },
-    sitemap: 'https://shia-calendar-online.vercel.app/sitemap.xml',
-  }
+    sitemap: `${siteUrl}/sitemap.xml`,
+    host: siteUrl,
+  };
 }
